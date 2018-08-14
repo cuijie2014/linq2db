@@ -14,7 +14,7 @@ namespace LinqToDB.Metadata
 		public T[] GetAttributes<T>(Type type, bool inherit)
 			where T : Attribute
 		{
-			if (typeof(T) == typeof(TableAttribute))
+			if (typeof(TableAttribute).IsAssignableFrom(typeof(T)))
 			{
 				var ta = _reader.GetAttributes<System.Data.Linq.Mapping.TableAttribute>   (type, inherit);
 				var da = _reader.GetAttributes<System.Data.Linq.Mapping.DatabaseAttribute>(type, inherit);
@@ -63,7 +63,7 @@ namespace LinqToDB.Metadata
 		public T[] GetAttributes<T>(Type type, MemberInfo memberInfo, bool inherit)
 			where T : Attribute
 		{
-			if (typeof(T) == typeof(ColumnAttribute))
+			if (typeof(ColumnAttribute).IsAssignableFrom(typeof(T)))
 			{
 				var attrs = _reader.GetAttributes<System.Data.Linq.Mapping.ColumnAttribute>(type, memberInfo, inherit);
 
@@ -82,7 +82,7 @@ namespace LinqToDB.Metadata
 					return new[] { (T)(Attribute)attr };
 				}
 			}
-			else if (typeof(T) == typeof(AssociationAttribute))
+			else if (typeof(AssociationAttribute).IsAssignableFrom(typeof(T)))
 			{
 				var ta = _reader.GetAttributes<System.Data.Linq.Mapping.TableAttribute>(type, memberInfo.DeclaringType, inherit);
 
